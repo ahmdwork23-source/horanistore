@@ -1,0 +1,671 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">
+<title>بضاعة أحذية الحوراني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky header with three tabs (overview / shop pallets / partnership); each section = summary strip, then filterable product grid with photos */
+:root{
+  --bg:#f3f4f2; --surface:#ffffff; --sunk:#e9ebe7; --line:#d9ddd6;
+  --fg:#1d2420; --muted:#5f6a63;
+  --p1:#1f6f68; --p1-soft:#dcefec;      /* مشطاح 1 */
+  --p2:#b4621b; --p2-soft:#f6e6d6;      /* مشطاح 2 */
+  --pt:#6a3d8f; --pt-soft:#ece2f4;      /* الشراكة */
+  --warn:#a8321f; --warn-soft:#f8e1dc;
+  --display:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#131715; --surface:#1b201d; --sunk:#232925; --line:#313833;
+  --fg:#e7ebe8; --muted:#9aa59e;
+  --p1:#5cc2b8; --p1-soft:#173532; --p2:#e7a061; --p2-soft:#3a2816;
+  --pt:#bb93df; --pt-soft:#2e2338; --warn:#f08a74; --warn-soft:#3b1d17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131715; --surface:#1b201d; --sunk:#232925; --line:#313833;
+  --fg:#e7ebe8; --muted:#9aa59e;
+  --p1:#5cc2b8; --p1-soft:#173532; --p2:#e7a061; --p2-soft:#3a2816;
+  --pt:#bb93df; --pt-soft:#2e2338; --warn:#f08a74; --warn-soft:#3b1d17; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55;direction:rtl}
+.num{font-variant-numeric:tabular-nums;font-family:var(--display)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px}
+.head-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-block:14px 10px}
+h1{font-family:var(--display);font-weight:700;font-size:1.45rem;margin:0;text-wrap:balance}
+.sub{color:var(--muted);font-size:.85rem}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px}
+nav.tabs button{font:600 .95rem var(--display);border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:8px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--p1);outline-offset:2px}
+main{padding-block:20px 60px}
+section.view{display:grid;gap:22px}
+h2{font-family:var(--display);font-size:1.15rem;margin:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h3{font-family:var(--display);font-size:1rem;margin:0}
+.tag{font:600 .75rem var(--display);padding:3px 10px;border-radius:999px;letter-spacing:.02em;white-space:nowrap}
+.t-p1{background:var(--p1-soft);color:var(--p1)} .t-p2{background:var(--p2-soft);color:var(--p2)} .t-pt{background:var(--pt-soft);color:var(--pt)} .t-w{background:var(--warn-soft);color:var(--warn)}
+
+/* overview blocks */
+.blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.block{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px;border-top:5px solid var(--c)}
+.block .kv{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+.kv div{display:grid;gap:2px;min-width:0}
+.kv span{color:var(--muted);font-size:.8rem}
+.kv b{font:700 1.25rem var(--display);font-variant-numeric:tabular-nums}
+.kv b small{font-size:.75rem;font-weight:400;color:var(--muted)}
+.block button.go{justify-self:start;font:600 .85rem var(--display);background:none;border:0;color:var(--c);cursor:pointer;padding:0}
+.mix{display:grid;gap:8px}
+.bar{display:flex;height:14px;border-radius:4px;overflow:hidden;background:var(--sunk)}
+.bar i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--c);margin-inline-end:5px;vertical-align:-1px}
+.panel>*{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px;min-width:0;align-content:start}
+#invPanel .costs .row.big b{color:var(--p1)}
+.cat-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.cat-table th,.cat-table td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+.cat-table th{font:600 .78rem var(--display);color:var(--muted)}
+.cat-table td.n{font-variant-numeric:tabular-nums;font-family:var(--display)}
+.scroll{overflow-x:auto}
+
+/* toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{font:600 .85rem var(--display);border:0;background:none;color:var(--fg);padding:7px 14px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--c,var(--fg));color:var(--surface)}
+.search{flex:1 1 200px;min-width:0;font:inherit;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:500 .8rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:4px 12px;border-radius:999px;cursor:pointer}
+.chips button[aria-pressed="true"]{border-color:var(--fg);color:var(--fg);background:var(--sunk)}
+.result-line{font-size:.85rem;color:var(--muted)}
+.result-line b{color:var(--fg);font-family:var(--display);font-variant-numeric:tabular-nums}
+
+/* product grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;grid-template-rows:auto 1fr;min-width:0}
+.card .ph{position:relative;aspect-ratio:1/1;background:var(--sunk);cursor:zoom-in;border:0;padding:0;width:100%;max-width:100%}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card .ph .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:.8rem}
+.card .ph .tag{position:absolute;top:8px;right:8px;box-shadow:0 1px 3px rgb(0 0 0 / .15)}
+.card .ph .cnt{position:absolute;bottom:8px;left:8px;background:var(--surface);color:var(--fg);font:600 .72rem var(--display);padding:2px 8px;border-radius:999px}
+.card .ph .no{position:absolute;top:8px;left:8px;background:var(--fg);color:var(--bg);font:700 .75rem var(--display);padding:2px 8px;border-radius:6px}
+.card .bd{padding:12px 14px 14px;display:grid;gap:8px;align-content:start}
+.card .ttl{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.card .ttl b{font:600 1rem var(--display);min-width:0}
+.card .art{font:500 .78rem var(--display);color:var(--muted);direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.meta{display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem}
+.meta span{background:var(--sunk);padding:2px 8px;border-radius:5px}
+.prices{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;border-top:1px dashed var(--line);padding-top:8px;font-size:.8rem}
+.prices span{color:var(--muted)}
+.prices b{display:block;color:var(--fg);font:600 .95rem var(--display);font-variant-numeric:tabular-nums}
+.prices .tot b{color:var(--c)}
+.split{font-size:.75rem;padding:5px 8px;border-radius:6px;background:var(--warn-soft);color:var(--warn)}
+
+/* table view */
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem;min-width:820px}
+.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle}
+.tbl th{font:600 .75rem var(--display);color:var(--muted);background:var(--sunk);position:sticky;top:0}
+.tbl td.n{font-family:var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl img{width:48px;height:48px;object-fit:cover;border-radius:6px;cursor:zoom-in;display:block}
+.tbl tfoot td{font-weight:700;background:var(--sunk)}
+
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.cartons{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.cartons div{border:1px solid var(--line);border-radius:6px;padding:6px 8px;display:grid;gap:0;background:var(--p1-soft)}
+.cartons div span{font:600 .72rem var(--display);color:var(--p1);direction:ltr;text-align:right}
+.cartons div b{font:700 1rem var(--display);font-variant-numeric:tabular-nums}
+.note{font-size:.85rem;color:var(--muted);margin:0}
+.costs{display:grid;gap:8px}
+.costs .row{display:flex;justify-content:space-between;gap:10px;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:.9rem}
+.costs .row b{font-family:var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.costs .row.big b{color:var(--pt);font-size:1.05rem}
+.stack{height:22px;display:flex;border-radius:5px;overflow:hidden}
+.stack i{display:grid;place-items:center;color:var(--surface);font:600 .72rem var(--display);font-style:normal}
+
+
+/* inventory count */
+.count{display:grid;grid-template-columns:1fr auto;grid-template-areas:'l d' 'i i';align-items:center;gap:6px 8px;border-top:1px dashed var(--line);padding-top:8px}
+.count label{grid-area:l}.count .dif{grid-area:d}.count input{grid-area:i;max-width:none!important}
+.count label{font-size:.78rem;color:var(--muted);white-space:nowrap}
+.count input,.tbl input{font:600 1rem var(--display);width:100%;min-width:0;max-width:110px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);color:var(--fg);text-align:center;font-variant-numeric:tabular-nums}
+.tbl input{width:84px}
+.count input:focus,.tbl input:focus{border-color:var(--c,var(--p1));background:var(--surface)}
+.count input:disabled,.tbl input:disabled{opacity:.6}
+.dif{font:600 .75rem var(--display);padding:3px 8px;border-radius:999px;white-space:nowrap;background:var(--sunk);color:var(--muted)}
+.dif.ok{background:var(--p1-soft);color:var(--p1)}
+.dif.short{background:var(--warn-soft);color:var(--warn)}
+.dif.over{background:var(--p2-soft);color:var(--p2)}
+.dif.saving{opacity:.6}
+.card.done{border-color:var(--c)}
+.prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.prog .pg{display:grid;gap:6px}
+.prog .pg .top{display:flex;justify-content:space-between;gap:8px;font-size:.85rem}
+.prog .pg .top b{font-family:var(--display);font-variant-numeric:tabular-nums}
+.prog .track{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.prog .track i{display:block;height:100%;background:var(--c)}
+.prog .pg small{color:var(--muted);font-size:.78rem}
+.status{font-size:.8rem;color:var(--muted)}
+
+
+/* login gate */
+body.locked header.top, body.locked main{display:none}
+body:not(.locked) .gate{display:none}
+.gate{min-height:100vh;display:grid;place-items:center;padding-block:32px;padding-inline:16px}
+.gate[hidden]{display:none!important}
+.gate form{width:100%;max-width:360px;background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--p1);border-radius:var(--r);padding:24px;display:grid;gap:14px}
+.gate h2{font-size:1.25rem}
+.gate .sub{margin:0}
+.gate label{display:grid;gap:6px;font-size:.85rem;color:var(--muted)}
+.gate input{font:500 1rem var(--body);padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);color:var(--fg);direction:rtl}
+.gate input:focus{border-color:var(--p1);background:var(--surface);outline:none}
+.gate button[type=submit]{font:600 1rem var(--display);padding:11px;border:0;border-radius:8px;background:var(--p1);color:var(--surface);cursor:pointer}
+.gate button[type=submit]:disabled{opacity:.6;cursor:wait}
+.gate .err{color:var(--warn);font-size:.85rem;min-height:1.2em;margin:0}
+.gate .ghost{font:500 .85rem var(--body);background:none;border:0;color:var(--muted);cursor:pointer;justify-self:center}
+.acct{display:flex;gap:6px;flex-wrap:wrap}
+.acct button,.acct .btn{font:500 .8rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:5px 12px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.acct button:disabled{opacity:.6;cursor:wait}
+.gate .ghost{text-decoration:underline;text-align:center}
+.syncbar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding-bottom:10px;font-size:.8rem;color:var(--muted)}
+.sync{display:inline-flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--muted);display:inline-block}
+.dot.on{background:#2f9e5b}.dot.off{background:var(--warn)}
+.who{display:inline-flex;align-items:center;gap:6px}
+.who input{font:500 .85rem var(--body);width:130px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg)}
+.by{grid-column:1/-1;font-size:.72rem;color:var(--muted)}
+.banner{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:10px 14px;font-size:.85rem}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline:16px;margin:0 auto;max-width:420px;background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;text-align:center;z-index:50;box-shadow:0 4px 14px rgb(0 0 0 / .25)}
+
+/* lightbox */
+dialog{border:0;padding:0;background:transparent;max-width:min(92vw,720px);width:100%}
+dialog::backdrop{background:rgb(0 0 0 / .78)}
+dialog .lb{background:var(--surface);border-radius:12px;overflow:hidden;display:grid}
+dialog img{width:100%;max-height:70vh;object-fit:contain;background:#000}
+dialog .cap{padding:12px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+dialog .nav{display:flex;gap:6px}
+dialog .nav button{font:600 .85rem var(--display);border:1px solid var(--line);background:var(--sunk);color:var(--fg);border-radius:8px;padding:6px 12px;cursor:pointer}
+@media (max-width:520px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .card .bd{padding:10px}
+  .prices{grid-template-columns:1fr}
+  .kv b{font-size:1.1rem}
+  h1{font-size:1.2rem}
+  .head-row .sub{display:none}
+  .head-row{padding-block:10px 8px}
+  .acct{flex-wrap:wrap;gap:5px}
+  .acct button,.acct .btn{padding:4px 9px;font-size:.74rem}
+  .syncbar{padding-bottom:8px}
+}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:hover{transform:translateY(-2px)}}
+</style><style>html,body{margin:0}body{font-size:14px}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head><body class="locked">
+
+<div class="gate" id="gate">
+  <form id="gateForm" autocomplete="off">
+    <h2>بضاعة أحذية الحوراني</h2>
+    <p class="sub">اكتب رمز الدخول لعرض البضاعة والجرد.</p>
+    <label>رمز الدخول<input id="gateCode" type="password" inputmode="numeric" autocomplete="current-password" required></label>
+    <p class="err" id="gateErr"></p>
+    <button type="submit">دخول</button>
+    <a class="ghost" href="guide.html">كيف أستخدم اللوحة؟</a>
+  </form>
+</div>
+<header class="top">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <h1>بضاعة أحذية الحوراني</h1>
+        <div class="sub">بضاعة المحل (مشطاح 1 و 2) وبضاعة شراكة مهنا والحوراني · سعر الجوز بالشيكل · الجرد ينحفظ ويبين لكل من يدخل</div>
+      </div>
+      <div class="acct">
+        <button type="button" id="xlsxBtn">تصدير Excel</button>
+        <button type="button" id="zipBtn"><span id="zipTxt">تنزيل الصور (ZIP)</span></button>
+        <a class="btn" href="guide.html" target="_blank" rel="noopener">دليل الاستخدام</a>
+        <button type="button" id="btnOut">خروج</button>
+      </div>
+    </div>
+    <div class="syncbar">
+      <span class="sync"><i class="dot" id="syncDot"></i><span id="syncTxt">جارٍ الاتصال…</span></span>
+      <label class="who">اسمك <input id="who" maxlength="40" placeholder="مثلاً: أكرم" autocomplete="name"></label>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" id="tab-ov" data-v="ov" aria-selected="true">نظرة عامة</button>
+      <button role="tab" id="tab-shop" data-v="shop" aria-selected="false">بضاعة المحل</button>
+      <button role="tab" id="tab-pt" data-v="pt" aria-selected="false">بضاعة الشراكة</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="banner" id="banner" hidden></div>
+  <!-- OVERVIEW -->
+  <section class="view" id="v-ov">
+    <div class="panel" id="invProgress"></div>
+    <div class="blocks" id="ovBlocks"></div>
+    <div class="panel">
+      <h2>توزيع الأزواج حسب الفئة</h2>
+      <div class="scroll"><table class="cat-table" id="catTable"></table></div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="view" id="v-shop" hidden>
+    <div class="two">
+      <div class="panel" id="invPanel"></div>
+      <div class="panel">
+        <h2>كراتين مشطاح 1 <span class="tag t-p1" id="cartTag"></span></h2>
+        <div class="cartons" id="cartons"></div>
+        <p class="note" id="cartNote"></p>
+      </div>
+    </div>
+    <div class="panel" style="--c:var(--p1)">
+      <div class="toolbar">
+        <div class="seg" id="shopSeg">
+          <button data-p="all" aria-pressed="true" style="--c:var(--fg)">الكل</button>
+          <button data-p="1" aria-pressed="false" style="--c:var(--p1)">مشطاح 1</button>
+          <button data-p="2" aria-pressed="false" style="--c:var(--p2)">مشطاح 2</button>
+        </div>
+        <div class="seg" id="shopSt">
+          <button data-s="all" aria-pressed="true">الكل</button>
+          <button data-s="todo" aria-pressed="false">لم يُجرد</button>
+          <button data-s="ok" aria-pressed="false">مطابق</button>
+          <button data-s="diff" aria-pressed="false">فيه فرق</button>
+        </div>
+        <input class="search" id="shopQ" type="search" placeholder="ابحث بالاسم أو الارتكل أو المقاس">
+        <div class="seg" id="shopMode">
+          <button data-m="grid" aria-pressed="true">صور</button>
+          <button data-m="table" aria-pressed="false">جدول</button>
+        </div>
+      </div>
+      <div class="chips" id="shopChips"></div>
+      <div class="result-line" id="shopRes"></div>
+      <div id="shopOut"></div>
+    </div>
+  </section>
+
+  <!-- PARTNER -->
+  <section class="view" id="v-pt" hidden>
+    <div class="two">
+      <div class="panel" id="ptCosts"></div>
+      <div class="panel" id="ptExtra"></div>
+    </div>
+    <div class="panel" style="--c:var(--pt)">
+      <div class="toolbar">
+        <div class="seg" id="ptSt">
+          <button data-s="all" aria-pressed="true">الكل</button>
+          <button data-s="todo" aria-pressed="false">لم يُجرد</button>
+          <button data-s="ok" aria-pressed="false">مطابق</button>
+          <button data-s="diff" aria-pressed="false">فيه فرق</button>
+        </div>
+        <input class="search" id="ptQ" type="search" placeholder="ابحث بالاسم أو الارتكل أو المقاس">
+        <div class="seg" id="ptMode">
+          <button data-m="grid" aria-pressed="true">صور</button>
+          <button data-m="table" aria-pressed="false">جدول</button>
+        </div>
+      </div>
+      <div class="chips" id="ptChips"></div>
+      <div class="result-line" id="ptRes"></div>
+      <div id="ptOut"></div>
+    </div>
+  </section>
+</main>
+
+<dialog id="lb"><div class="lb">
+  <img id="lbImg" alt="">
+  <div class="cap"><div><b id="lbT"></b> <span class="sub" id="lbS"></span></div>
+    <div class="nav"><button id="lbPrev">السابق</button><button id="lbNext">التالي</button><button id="lbX">إغلاق</button></div></div>
+</div></dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const API = '';
+const GATE_HASH = '154574b6b0c512702f3b18277261866565e13b286eb07dd86bbba316963f3996';
+const REPO = 'horanistore';
+const D = {"pallets": [[{"n": 1, "art": "H-52", "desc": "نايك اصلي", "size": "41/45", "qty": 10, "egp": 1300, "shk": 139.51, "img": ["img/p1_1_0.webp"]}, {"n": 2, "art": "510", "desc": "سكتشر رجالي", "size": "41/45", "qty": 40, "egp": 450, "shk": 48.29, "img": ["img/p1_2_0.webp"]}, {"n": 3, "art": "H-46", "desc": "نايك شبابي", "size": "37/41", "qty": 15, "egp": 760, "shk": 81.56, "img": ["img/p1_3_0.webp"]}, {"n": 4, "art": "H-35", "desc": "اديدس شبابي", "size": "37/41", "qty": 15, "egp": 600, "shk": 64.39, "img": ["img/p1_4_0.webp"]}, {"n": 5, "art": "H-110", "desc": "نايك اطفال", "size": "27/31", "qty": 15, "egp": 330, "shk": 35.41, "img": ["img/p1_5_0.webp"]}, {"n": 6, "art": "H-107", "desc": "سكتشر رجالي", "size": "37/41", "qty": 24, "egp": 680, "shk": 72.97, "img": ["img/p1_6_0.webp"]}, {"n": 7, "art": "H-99", "desc": "نايك شبابي", "size": "37/41", "qty": 12, "egp": 385, "shk": 41.32, "img": ["img/p1_7_0.webp"]}, {"n": 8, "art": "H-59", "desc": "سكتشر شبابي", "size": "37/41", "qty": 24, "egp": 880, "shk": 94.43, "img": ["img/p1_8_0.webp"]}, {"n": 9, "art": "H-90", "desc": "نيو بلنص شبابي", "size": "37/41", "qty": 15, "egp": 450, "shk": 48.29, "img": ["img/p1_9_0.webp"]}, {"n": 10, "art": "H-120", "desc": "نورتو فيس", "size": "41/45", "qty": 15, "egp": 1300, "shk": 139.51, "img": ["img/p1_10_0.webp"]}, {"n": 11, "art": "H-93", "desc": "بروكس رجالي", "size": "41/45", "qty": 15, "egp": 1300, "shk": 139.51, "img": ["img/p1_11_0.webp"]}, {"n": 12, "art": "H-65", "desc": "اطفال", "size": "27/31", "qty": 13, "egp": 400, "shk": 42.92, "img": ["img/p1_12_0.webp"]}, {"n": 13, "art": "H-70", "desc": "اطفال", "size": "22/27", "qty": 29, "egp": 350, "shk": 37.56, "img": ["img/p1_13_0.webp"]}, {"n": 14, "art": "H-74", "desc": "اطفال", "size": "27/31", "qty": 30, "egp": 350, "shk": 37.56, "img": ["img/p1_14_0.webp"]}, {"n": 15, "art": "H-75", "desc": "اطفالي", "size": "22/27", "qty": 30, "egp": 350, "shk": 37.56, "img": ["img/p1_15_0.webp"]}, {"n": 16, "art": "H-62", "desc": "اطفالي", "size": "27/31", "qty": 15, "egp": 350, "shk": null, "img": ["img/p1_16_0.webp"]}, {"n": 17, "art": "H-86", "desc": "اطفالي", "size": "27/31", "qty": 10, "egp": 370, "shk": 39.71, "img": ["img/p1_17_0.webp"]}, {"n": 18, "art": "H-127", "desc": "اديستار", "size": "41/45", "qty": 10, "egp": 1300, "shk": 139.51, "img": ["img/p1_18_0.webp"]}, {"n": 19, "art": "H-129", "desc": "زنوبه نايك", "size": "41/45", "qty": 10, "egp": 170, "shk": 18.24, "img": ["img/p1_19_0.webp"]}, {"n": 20, "art": "H-129", "desc": "زنوبه اديدس", "size": "41/45", "qty": 12, "egp": 167, "shk": 17.92, "img": ["img/p1_20_0.webp"]}, {"n": 21, "art": "H-128", "desc": "شبشب ريلاكس", "size": "41/45", "qty": 9, "egp": 330, "shk": 35.41, "img": ["img/p1_21_0.webp"]}, {"n": 22, "art": "H-124", "desc": "شبشب جلد", "size": "41/45", "qty": 15, "egp": 420, "shk": 45.07, "img": ["img/p1_22_0.webp"]}, {"n": 23, "art": "H-123", "desc": "شبشب جلد", "size": "41/45", "qty": 5, "egp": 420, "shk": 45.07, "img": ["img/p1_23_0.webp"]}, {"n": 24, "art": "H-115", "desc": "شبشب بصمه", "size": "41/45", "qty": 10, "egp": 300, "shk": 32.19, "img": ["img/p1_24_0.webp"]}, {"n": 25, "art": "A-4", "desc": "بروكس رجالي", "size": "41/45", "qty": 20, "egp": 1300, "shk": 139.5, "img": ["img/p1_25_0.webp"]}, {"n": 26, "art": "A-3", "desc": "نايك اصلي", "size": "41/45", "qty": 20, "egp": 1300, "shk": 139.5, "img": ["img/p1_26_0.webp"]}, {"n": 27, "art": "A-23", "desc": "نايك اصلي شبابي", "size": "37/41", "qty": 20, "egp": 1100, "shk": 118.04, "img": ["img/p1_27_0.webp"]}, {"n": 28, "art": "A-2", "desc": "نايك عالي", "size": "41/45", "qty": 20, "egp": 1300, "shk": 139.5, "img": ["img/p1_28_0.webp"]}, {"n": 29, "art": "A-1", "desc": "تركس", "size": "41/45", "qty": 10, "egp": 1350, "shk": 144.87, "img": ["img/p1_29_0.webp"]}, {"n": 30, "art": "A-12", "desc": "نورتو فيس", "size": "41/45", "qty": 5, "egp": 1350, "shk": 144.78, "img": ["img/p1_30_0.webp"]}, {"n": 31, "art": "30/29", "desc": "سكتشر رجالي", "size": "41/45", "qty": 13, "egp": 995, "shk": 106.78, "img": ["img/p1_31_0.webp"]}], [{"n": 1, "art": "H-125", "desc": "شبشب ريلاكس", "size": "41/45", "qty": 3, "egp": 330, "shk": 35.41, "img": ["img/p2_1_0.webp"]}, {"n": 2, "art": "H-123", "desc": "شبشب جلد", "size": "41/45", "qty": 5, "egp": 420, "shk": 45.07, "img": ["img/p2_2_0.webp"]}, {"n": 3, "art": "30/29", "desc": "سكتشر رجالي", "size": "41/45", "qty": 2, "egp": 995, "shk": 106.78, "img": ["img/p2_3_0.webp"]}, {"n": 4, "art": "30/40", "desc": "نيو بلينص", "size": "41/45", "qty": 15, "egp": 995, "shk": 106.78, "img": ["img/p2_4_0.webp"]}, {"n": 5, "art": "30/21", "desc": "سكتشر رجالي", "size": "41/45", "qty": 15, "egp": 800, "shk": 85.85, "img": ["img/p2_5_0.webp"]}, {"n": 6, "art": "30/28", "desc": "سكتشر رجالي", "size": "41/45", "qty": 15, "egp": 1000, "shk": 107.31, "img": ["img/p2_6_0.webp"]}, {"n": 7, "art": "B-30", "desc": "شبابي", "size": "37/41", "qty": 10, "egp": 280, "shk": 30.05, "img": ["img/p2_7_0.webp"]}, {"n": 8, "art": "AX100", "desc": "اطفال 32/36", "size": "32/36", "qty": 15, "egp": 400, "shk": 42.92, "img": ["img/p2_8_0.webp"]}, {"n": 9, "art": "Z01A", "desc": "اطفال 32/36", "size": "32/36", "qty": 15, "egp": 380, "shk": 40.78, "img": ["img/p2_9_0.webp"]}, {"n": 10, "art": "A-03", "desc": "اطفال 32/36", "size": "32/36", "qty": 15, "egp": 380, "shk": 40.78, "img": ["img/p2_10_0.webp"]}, {"n": 11, "art": "H003", "desc": "سكتشر استك", "size": "41/45", "qty": 15, "egp": 1350, "shk": 144.87, "img": ["img/p2_11_0.webp"]}, {"n": 12, "art": "H002", "desc": "سكتشر رباط", "size": "41/45", "qty": 15, "egp": 1350, "shk": 144.87, "img": ["img/p2_12_0.webp"]}, {"n": 13, "art": "H005", "desc": "هوكا", "size": "41/45", "qty": 12, "egp": 1400, "shk": 150.24, "img": ["img/p2_13_0.webp"]}, {"n": 14, "art": "H004", "desc": "نورت فيس", "size": "41/45", "qty": 25, "egp": 1450, "shk": 155.6, "img": ["img/p2_14_0.webp"]}, {"n": 15, "art": "H-100", "desc": "نايك", "size": "38/41", "qty": 5, "egp": 1000, "shk": 107.31, "img": ["img/p2_15_0.webp"]}, {"n": 16, "art": "HMF15", "desc": "سكتشر شبابي", "size": "37/41", "qty": 12, "egp": 1000, "shk": 107.31, "img": ["img/p2_16_0.webp"]}, {"n": 17, "art": "HMF-13", "desc": "سكتشر شبابي", "size": "37/41", "qty": 12, "egp": 1000, "shk": 107.31, "img": ["img/p2_17_0.webp"]}, {"n": 18, "art": "HAS-6", "desc": "كلومبيه لرجالي", "size": "41/45", "qty": 15, "egp": 800, "shk": 85.85, "img": ["img/p2_18_0.webp"]}, {"n": 19, "art": "HH-2", "desc": "حريمي بولو", "size": "", "qty": 12, "egp": 200, "shk": 21.46, "img": ["img/p2_19_0.webp"]}, {"n": 20, "art": "HH-3", "desc": "حريمي اديدس", "size": "", "qty": 12, "egp": 200, "shk": 21.46, "img": ["img/p2_20_0.webp"]}, {"n": 21, "art": "HSS-757", "desc": "نايك اير فورس", "size": "41/45", "qty": 20, "egp": 750, "shk": 80.48, "img": ["img/p2_21_0.webp"]}, {"n": 22, "art": "577", "desc": "بناتي", "size": "32/36", "qty": 12, "egp": 140, "shk": 15.02, "img": ["img/p2_22_0.webp"]}, {"n": 23, "art": "M-43", "desc": "بناتي", "size": "27/30", "qty": 12, "egp": 185, "shk": 19.85, "img": ["img/p2_23_0.webp"]}, {"n": 24, "art": "QLQ", "desc": "بناتي", "size": "32/35", "qty": 5, "egp": 165, "shk": 17.71, "img": ["img/p2_24_0.webp"]}, {"n": 25, "art": "تسلا", "desc": "تسلا", "size": "41/45", "qty": 10, "egp": 170, "shk": 18.24, "img": ["img/p2_25_0.webp"]}, {"n": 26, "art": "5510", "desc": "بناتي", "size": "32/35", "qty": 12, "egp": 165, "shk": 17.71, "img": ["img/p2_26_0.webp"]}, {"n": 27, "art": "M-118", "desc": "حريمي  37/41", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.46, "img": ["img/p2_27_0.webp"]}, {"n": 28, "art": "115", "desc": "حريمي", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.46, "img": ["img/p2_28_0.webp"]}, {"n": 29, "art": "7061", "desc": "ررجالي", "size": "41/45", "qty": 12, "egp": 175, "shk": 18.78, "img": ["img/p2_29_0.webp"]}, {"n": 30, "art": "056/2", "desc": "اطفال", "size": "27/30", "qty": 12, "egp": 165, "shk": 17.71, "img": ["img/p2_30_0.webp"]}, {"n": 31, "art": "D2-50", "desc": "اطفال", "size": "32/35", "qty": 12, "egp": 185, "shk": 19.85, "img": ["img/p2_31_0.webp"]}, {"n": 32, "art": "M-51", "desc": "بناتي", "size": "32/35", "qty": 12, "egp": 185, "shk": 19.85, "img": ["img/p2_32_0.webp"]}, {"n": 33, "art": "055/2", "desc": "محير", "size": "27/30", "qty": 12, "egp": 165, "shk": 17.71, "img": ["img/p2_33_0.webp"]}, {"n": 34, "art": "6839", "desc": "شبابي", "size": "37/41", "qty": 12, "egp": 225, "shk": 24.15, "img": ["img/p2_34_0.webp"]}, {"n": 35, "art": "M72", "desc": "رجالي", "size": "41/45", "qty": 12, "egp": 245, "shk": 26.29, "img": ["img/p2_35_0.webp"]}, {"n": 36, "art": "27/1", "desc": "شبابي", "size": "37/41", "qty": 12, "egp": 220, "shk": 23.61, "img": ["img/p2_36_0.webp"]}, {"n": 37, "art": "N-107", "desc": "شبابي اير فرس", "size": "37/41", "qty": 10, "egp": 170, "shk": 18.24, "img": ["img/p2_37_0.webp"]}, {"n": 38, "art": "307", "desc": "شبابي", "size": "37/41", "qty": 9, "egp": 200, "shk": 21.46, "img": ["img/p2_38_0.webp"]}, {"n": 39, "art": "", "desc": "HNB-530", "size": "41/45", "qty": 5, "egp": 1000, "shk": 107.31, "img": ["img/p2_39_0.webp"]}]], "cartons": [["A-1", 25], ["A-2", 28], ["A-3", 26], ["A-4", 27], ["A-5", 28], ["A-6", 33], ["A-7", 27], ["A-8", 32], ["A-9", 30], ["A-10", 33], ["A-11", 29], ["A-12", 26], ["A-13", 23], ["A-14", 24], ["A-15", 25], ["A-16", 24], ["A-17", 25], ["A-18", 22], ["A-19", 21]], "invoice": {"date": "21/9/2026", "no": "12", "name": "اكرم الحوراني", "code": "146", "items": [{"no": 31, "name": "سكتشر رجالي 30/29", "cartons": 1, "qty": 15, "price": 995, "total": 14925, "note": "موجود في مشطاح 1 عدد2 قطعه"}, {"no": 30, "name": "نورت فيس A-12", "cartons": 1, "qty": 5, "price": 1350, "total": 6750, "note": ""}, {"no": 25, "name": "بروكس اصلي A-4", "cartons": 1, "qty": 20, "price": 1300, "total": 26000, "note": ""}, {"no": 26, "name": "نايك اصلي A-3", "cartons": 1, "qty": 20, "price": 1300, "total": 26000, "note": ""}, {"no": 28, "name": "نايك عالي A-2", "cartons": 1, "qty": 20, "price": 1300, "total": 26000, "note": ""}, {"no": 29, "name": "تركيس اصليA-1", "cartons": 1, "qty": 10, "price": 1350, "total": 13500, "note": ""}, {"no": 27, "name": "نايك اصلي شبابي A-23", "cartons": 1, "qty": 20, "price": 1100, "total": 22000, "note": ""}], "sum": 135175, "comm": 6758.75, "total": 141933.75, "company": "EGYPT CASTLE COMPANY"}, "partner": {"items": [{"n": 1, "art": "H-12", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 480, "shk": 52.4308991558666, "egp_full": 891.3252856497321, "img": ["img/sp_1_0.webp"]}, {"n": 2, "art": "B-14", "desc": "حريمي 38/41", "size": "38/41", "qty": 12, "egp": 475, "shk": 51.88475294117647, "egp_full": 882.0408, "img": ["img/sp_2_0.webp"]}, {"n": 3, "art": "B-15", "desc": "حريمي 37/41", "size": "37/41", "qty": 10, "egp": 230, "shk": 25.123143529411763, "egp_full": 427.09344, "img": ["img/sp_3_0.webp"]}, {"n": 4, "art": "B-25", "desc": "حريمي 37/41", "size": "37/41", "qty": 14, "egp": 375, "shk": 40.96164705882353, "egp_full": 696.348, "img": ["img/sp_4_0.webp"]}, {"n": 5, "art": "B-27", "desc": "حريمي 38/41", "size": "38/41", "qty": 12, "egp": 475, "shk": 51.88475294117647, "egp_full": 882.0408, "img": ["img/sp_5_0.webp"]}, {"n": 6, "art": "B-23", "desc": "حريمي 38/41", "size": "38/41", "qty": 12, "egp": 385, "shk": 42.05395764705882, "egp_full": 714.91728, "img": ["img/sp_6_0.webp"]}, {"n": 7, "art": "B-20", "desc": "حريمي 37/41", "size": "37/41", "qty": 10, "egp": 440, "shk": 48.06166588235294, "egp_full": 817.04832, "img": ["img/sp_7_0.webp"]}, {"n": 8, "art": "B-21", "desc": "حريمي 37/41", "size": "37/41", "qty": 10, "egp": 230, "shk": 25.123143529411763, "egp_full": 427.09344, "img": ["img/sp_8_0.webp"]}, {"n": 9, "art": "11016", "desc": "حريمي 37/41", "size": "37/41", "qty": 14, "egp": 330, "shk": 36.046249411764705, "egp_full": 612.78624, "img": ["img/sp_9_0.webp"]}, {"n": 10, "art": "S-1", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 325, "shk": 35.50009411764706, "egp_full": 603.5016, "img": ["img/sp_10_0.webp"]}, {"n": 11, "art": "مستورد", "desc": "شبشب رجالي جلد مستورد 41/45", "size": "41/45", "qty": 14, "egp": 250, "shk": 27.307764705882352, "egp_full": 464.23199999999997, "img": ["img/sp_11_0.webp"]}, {"n": 12, "art": "ايفا", "desc": "شبشب نايك ايفا 41/45", "size": "41/45", "qty": 12, "egp": 100, "shk": 10.923105882352942, "egp_full": 185.6928, "img": ["img/sp_12_0.webp"]}, {"n": 13, "art": "مستورد", "desc": "شبشب نايك مستورد 41/45", "size": "41/45", "qty": 6, "egp": 200, "shk": 21.846211764705885, "egp_full": 371.3856, "img": ["img/sp_13_0.webp"], "flag": "شيت الصور يذكر 12 جوز، والحسبة مبنية على 6"}, {"n": 14, "art": "مايل", "desc": "نايك مايل 41/45", "size": "41/45", "qty": 24, "egp": 160, "shk": 17.476969411764706, "egp_full": 297.10848, "img": ["img/sp_14_0.webp"]}, {"n": 15, "art": "H-13", "desc": "رجالي نيوبلنص41/45", "size": "41/45", "qty": 15, "egp": 950, "shk": 103.76950588235295, "egp_full": 1764.0816, "img": ["img/sp_15_0.webp"]}, {"n": 16, "art": "400/49", "desc": "رجالي نيوبلنص41/45", "size": "41/45", "qty": 15, "egp": 995, "shk": 108.68490352941177, "egp_full": 1847.64336, "img": ["img/sp_16_0.webp"]}, {"n": 17, "art": "301", "desc": "سكشتر رجالي 41/45", "size": "41/45", "qty": 15, "egp": 950, "shk": 103.76950588235295, "egp_full": 1764.0816, "img": ["img/sp_17_0.webp"]}, {"n": 18, "art": "HH", "desc": "اير فرس 41/45 رجالي", "size": "41/45", "qty": 30, "egp": 775, "shk": 84.6540705882353, "egp_full": 1439.1192, "img": ["img/sp_18_0.webp"]}, {"n": 19, "art": "276773", "desc": "سكتشر رجالي 41/45", "size": "41/45", "qty": 15, "egp": 995, "shk": 108.68490352941177, "egp_full": 1847.64336, "img": ["img/sp_19_0.webp"]}, {"n": 20, "art": "1345", "desc": "نايك رجالي 41/45", "size": "41/45", "qty": 15, "egp": 850, "shk": 92.84640000000002, "egp_full": 1578.3888000000002, "img": ["img/sp_20_0.webp"]}, {"n": 21, "art": "72645", "desc": "رجالي مستورد", "size": "41/45", "qty": 15, "egp": 850, "shk": 92.84640000000002, "egp_full": 1578.3888000000002, "img": ["img/sp_21_0.webp"]}, {"n": 22, "art": "72770", "desc": "كولمبيه رجالي", "size": "41/45", "qty": 15, "egp": 995, "shk": 108.68490352941177, "egp_full": 1847.64336, "img": ["img/sp_22_0.webp"]}, {"n": 23, "art": "72642", "desc": "نايك مستورد", "size": "41/45", "qty": 15, "egp": 850, "shk": 92.84640000000002, "egp_full": 1578.3888000000002, "img": ["img/sp_23_0.webp"]}, {"n": 24, "art": "319", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.846211764705885, "egp_full": 371.3856, "img": ["img/sp_24_0.webp"]}, {"n": 25, "art": "M-302", "desc": "اطفال 32/35", "size": "32/35", "qty": 9, "egp": 165, "shk": 18.023124705882353, "egp_full": 306.39312, "img": ["img/sp_25_0.webp"]}, {"n": 26, "art": "M-202", "desc": "اطفال 32/35", "size": "32/35", "qty": 10, "egp": 165, "shk": 18.023124705882353, "egp_full": 306.39312, "img": ["img/sp_26_0.webp"]}, {"n": 27, "art": "N-107", "desc": "اير فروس حريمي 37/41", "size": "37/41", "qty": 15, "egp": 170, "shk": 18.569280000000003, "egp_full": 315.67776000000003, "img": ["img/sp_27_0.webp"]}, {"n": 28, "art": "313", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.846211764705885, "egp_full": 371.3856, "img": ["img/sp_28_0.webp"]}, {"n": 29, "art": "114", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.846211764705885, "egp_full": 371.3856, "img": ["img/sp_29_0.webp"]}, {"n": 30, "art": "314", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.846211764705885, "egp_full": 371.3856, "img": ["img/sp_30_0.webp"]}, {"n": 31, "art": "572", "desc": "اطفال 32/35", "size": "32/35", "qty": 12, "egp": 140, "shk": 15.292348235294117, "egp_full": 259.96992, "img": ["img/sp_31_0.webp"]}, {"n": 32, "art": "5839", "desc": "اطفال 32/35", "size": "32/35", "qty": 12, "egp": 185, "shk": 20.207745882352942, "egp_full": 343.53168, "img": ["img/sp_32_0.webp"]}, {"n": 33, "art": "310", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.846211764705885, "egp_full": 371.3856, "img": ["img/sp_33_0.webp"]}, {"n": 34, "art": "111", "desc": "حريمي 37/41", "size": "37/41", "qty": 15, "egp": 200, "shk": 21.846211764705885, "egp_full": 371.3856, "img": ["img/sp_34_0.webp"]}, {"n": 35, "art": "516", "desc": "سكتشر رجالي 42/46", "size": "42/46", "qty": 50, "egp": 400, "shk": 43.69242352941177, "egp_full": 742.7712, "img": ["img/sp_35_0.webp"]}, {"n": 36, "art": "515", "desc": "سكتشر رجالي 42/46", "size": "42/46", "qty": 50, "egp": 400, "shk": 43.69242352941177, "egp_full": 742.7712, "img": ["img/sp_36_0.webp"]}, {"n": 37, "art": "B37", "desc": "اطفالي 27/31", "size": "27/31", "qty": 15, "egp": 205, "shk": 22.39236705882353, "egp_full": 380.67024000000004, "img": ["img/sp_37_0.webp"]}, {"n": 38, "art": "B34", "desc": "اطفالي 27/31", "size": "27/31", "qty": 15, "egp": 205, "shk": 22.39236705882353, "egp_full": 380.67024000000004, "img": ["img/sp_38_0.webp"]}, {"n": 39, "art": "B35", "desc": "اطفالي 27/31", "size": "27/31", "qty": 15, "egp": 205, "shk": 22.39236705882353, "egp_full": 380.67024000000004, "img": ["img/sp_39_0.webp"]}, {"n": 40, "art": "S", "desc": "سكتشر رجالي شبشب", "size": "41/45", "qty": 24, "egp": 100, "shk": 10.923105882352942, "egp_full": 185.6928, "img": ["img/sp_40_0.webp"]}, {"n": 41, "art": "D", "desc": "اديدس شبشب", "size": "41/45", "qty": 24, "egp": 100, "shk": 10.923105882352942, "egp_full": 185.6928, "img": ["img/sp_41_0.webp"]}, {"n": 42, "art": "521", "desc": "اديدس رجالي 41/45", "size": "41/45", "qty": 15, "egp": 420, "shk": 45.877044705882355, "egp_full": 779.90976, "img": ["img/sp_42_0.webp"]}, {"n": 43, "art": "520", "desc": "نايك رجالي 41/45", "size": "41/45", "qty": 15, "egp": 420, "shk": 45.877044705882355, "egp_full": 779.90976, "img": ["img/sp_43_0.webp"]}, {"n": 44, "art": "300", "desc": "شراب رجالي 41/45", "size": "41/45", "qty": 10, "egp": 300, "shk": 32.76931764705882, "egp_full": 557.0784, "img": ["img/sp_44_0.webp"]}, {"n": 45, "art": "H-026", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 925, "shk": 101.0387294117647, "egp_full": 1717.6584, "img": ["img/sp_45_0.webp"]}, {"n": 46, "art": "H-020", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 825, "shk": 90.11562352941176, "egp_full": 1531.9656, "img": ["img/sp_46_0.webp"]}, {"n": 47, "art": "H-09", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 850, "shk": 92.84640000000002, "egp_full": 1578.3888000000002, "img": ["img/sp_47_0.webp"]}, {"n": 48, "art": "FM-44", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 810, "shk": 88.47715764705882, "egp_full": 1504.11168, "img": ["img/sp_48_0.webp"]}, {"n": 49, "art": "26108", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 800, "shk": 87.38484705882354, "egp_full": 1485.5424, "img": ["img/sp_49_0.webp"]}, {"n": 50, "art": "H07", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 920, "shk": 100.49257411764705, "egp_full": 1708.37376, "img": ["img/sp_50_0.webp"]}, {"n": 51, "art": "MH-37", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 810, "shk": 88.47715764705882, "egp_full": 1504.11168, "img": ["img/sp_51_0.webp"]}, {"n": 52, "art": "FM-45", "desc": "مستورد رجالي", "size": "41/45", "qty": 24, "egp": 855, "shk": 93.39255529411764, "egp_full": 1587.67344, "img": ["img/sp_52_0.webp"]}, {"n": 53, "art": "F-1", "desc": "مستورد رجالي", "size": "41/45", "qty": 16, "egp": 810, "shk": 88.47715764705882, "egp_full": 1504.11168, "img": ["img/sp_53_0.webp"]}, {"n": null, "art": "", "desc": "بابوج من بضاعة ابو جهاد طرف البطش", "size": "", "qty": null, "egp": null, "shk": 30, "extra": true, "img": []}, {"n": null, "art": "", "desc": "صندل من بضاعة ابو جهاد طرف البطش", "size": "", "qty": null, "egp": null, "shk": 65, "extra": true, "img": []}], "exp": 398240, "exp_shk": 23425.882352941175, "ratio": 0.8569276784369418, "rate": 17, "goods": 464730, "goods_shk": 27337.058823529413, "full": 862970, "full_shk": 50762.94117647059}};
+const f0 = n => n==null||isNaN(n) ? '—' : Math.round(n).toLocaleString('en-US');
+const f2 = n => n==null||isNaN(n) ? '—' : (+n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = id => document.getElementById(id);
+function cat(d){
+  if(/شبشب|زنوب|بابوج|صندل/.test(d)) return 'شباشب';
+  if(/اطفال|بناتي|محير/.test(d)) return 'أطفال';
+  if(/حريمي/.test(d)) return 'حريمي';
+  if(/شبابي/.test(d)) return 'شبابي';
+  if(/شراب/.test(d)) return 'شرابات';
+  return 'رجالي';
+}
+const CATS=['رجالي','شبابي','حريمي','أطفال','شباشب','شرابات'];
+const CATC={'رجالي':'var(--p1)','شبابي':'var(--p2)','حريمي':'var(--pt)','أطفال':'#3f7fbf','شباشب':'var(--muted)','شرابات':'var(--warn)'};
+
+const shop=[];
+D.pallets.forEach((arr,i)=>arr.forEach(it=>shop.push({...it,pal:i+1,cat:cat(it.desc),id:`p${i+1}-${it.n}`})));
+const part=D.partner.items.filter(i=>!i.extra).map(it=>({...it,cat:cat(it.desc),id:`pt-${it.n}`,pre:it.egp/D.partner.rate}));
+const extras=D.partner.items.filter(i=>i.extra);
+const ALL=[...shop,...part]; const BYID={}; ALL.forEach(x=>BYID[x.id]=x);
+const artPal={};shop.forEach(s=>{(artPal[s.art]??=new Set()).add(s.pal)});
+const sum=(a,k)=>a.reduce((t,x)=>t+(x[k]||0),0);
+const P1=shop.filter(s=>s.pal==1),P2=shop.filter(s=>s.pal==2);
+
+// ---------- inventory store (Google Sheets via JSONP)
+const COUNTS={};           // id -> number
+const META={};             // id -> {at,by}
+const pending={}, inflight={};
+let CAN_WRITE=true;
+const cnt=it=>COUNTS[it.id];
+function status(it){const c=cnt(it);if(c==null)return'todo';return c===it.qty?'ok':'diff'}
+const fmtAt=t=>{const d=new Date(t);return isNaN(d)?'':d.toLocaleString('ar-EG-u-nu-latn',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})};
+function whoTxt(id){const m=META[id];if(!m||COUNTS[id]==null)return'';return [m.by,fmtAt(m.at)].filter(Boolean).join(' · ')}
+function difHTML(it){
+  const w=esc(whoTxt(it.id)), t=w?` title="${w}"`:'';
+  const c=cnt(it); if(c==null) return `<span class="dif" data-dif="${it.id}">لم يُجرد</span>`;
+  const d=c-it.qty;
+  if(d===0) return `<span class="dif ok" data-dif="${it.id}"${t}>مطابق</span>`;
+  return d<0?`<span class="dif short" data-dif="${it.id}"${t}>ناقص ${-d}</span>`:`<span class="dif over" data-dif="${it.id}"${t}>زايد ${d}</span>`;
+}
+const byHTML=it=>`<span class="by" data-by="${it.id}">${esc(whoTxt(it.id))}</span>`;
+function inputHTML(it){
+  return `<input type="number" inputmode="numeric" min="0" step="1" id="c-${it.id}" data-cid="${it.id}" value="${cnt(it)??''}" placeholder="—" aria-label="العدد بعد الجرد ${esc(it.desc)}" ${CAN_WRITE?'':'disabled'}>`;
+}
+function refreshCounts(){
+  document.querySelectorAll('[data-cid]').forEach(el=>{
+    const it=BYID[el.dataset.cid]; if(document.activeElement!==el&&!pending[it.id]) el.value=cnt(it)??'';
+    el.disabled=!CAN_WRITE;
+  });
+  document.querySelectorAll('[data-dif]').forEach(el=>{const it=BYID[el.dataset.dif];el.outerHTML=difHTML(it)});
+  document.querySelectorAll('[data-by]').forEach(el=>{el.textContent=whoTxt(el.dataset.by)});
+  document.querySelectorAll('.card[data-card]').forEach(el=>el.classList.toggle('done',cnt(BYID[el.dataset.card])!=null));
+  renderProgress(); resultLines();
+}
+function setStatus(msg){document.querySelectorAll('.status').forEach(s=>s.textContent=msg)}
+let tt; function toast(m){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3800)}
+function setSync(on,txt){$('syncDot').className='dot '+(on?'on':'off');$('syncTxt').textContent=txt}
+
+let cbSeq=0;
+function jsonp(params){
+  return new Promise((resolve,reject)=>{
+    const name='__jard'+(++cbSeq)+'_'+Date.now();
+    const qs=Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(v==null?'':v)).join('&');
+    const s=document.createElement('script'); let t;
+    const done=()=>{ clearTimeout(t); delete window[name]; s.remove(); };
+    t=setTimeout(()=>{ done(); reject(new Error('timeout')); },15000);
+    window[name]=d=>{ done(); resolve(d); };
+    s.onerror=()=>{ done(); reject(new Error('network')); };
+    s.src=API+'?'+qs+'&callback='+name; document.head.appendChild(s);
+  });
+}
+const getName=()=>$('who').value.trim();
+let PIN='';
+const palName=it=>it.pal?'مشطاح '+it.pal:'الشراكة';
+async function commit(id){
+  clearTimeout(pending[id]); delete pending[id];
+  const el=$('c-'+id); if(!el||!API) return;
+  const raw=el.value.trim();
+  if(raw!==''&&!isFinite(Number(raw))) return;
+  const v=raw===''?null:Math.max(0,Math.round(Number(raw)));
+  if(v===(COUNTS[id]??null)) return;
+  if(inflight[id]) await inflight[id].catch(()=>{});
+  if(v===(COUNTS[id]??null)) return;
+  const prev=COUNTS[id], prevM=META[id], it=BYID[id];
+  if(v==null){delete COUNTS[id];delete META[id]} else {COUNTS[id]=v;META[id]={at:new Date().toISOString(),by:getName()}}
+  refreshCounts();
+  const chip=document.querySelector(`[data-dif="${id}"]`); if(chip) chip.classList.add('saving');
+  inflight[id]=jsonp({action:'set',key:id,count:v==null?'':v,by:getName(),pin:PIN,pal:palName(it),name:it.desc,art:it.art||'',size:it.size||'',qty:it.qty})
+    .then(j=>{
+      if(j&&j.ok){ setSync(true,'متزامن · آخر حفظ '+new Date().toLocaleTimeString('ar-EG-u-nu-latn',{hour:'2-digit',minute:'2-digit'})); setStatus(''); return; }
+      throw new Error((j&&j.error)||'err');
+    })
+    .catch(e=>{
+      if(prev==null) delete COUNTS[id]; else COUNTS[id]=prev;
+      if(prevM) META[id]=prevM; else delete META[id];
+      if(e.message==='bad_pin') toast('رمز الدخول ما عاد صحيح — اطلع وادخل من جديد. ما انحفظ العدد.');
+      else if(e.message==='timeout'||e.message==='network'){ setSync(false,'تعذّر الاتصال بجدول الجرد'); toast('ما انحفظ العدد — تأكد من الإنترنت وجرّب مرة ثانية.'); }
+      else toast('ما انحفظ العدد ('+e.message+')');
+      const x=$('c-'+id); if(x) x.value=COUNTS[id]??'';
+      refreshCounts();
+    })
+    .finally(()=>{ delete inflight[id]; });
+}
+document.addEventListener('input',e=>{const el=e.target.closest&&e.target.closest('[data-cid]');if(!el)return;const id=el.dataset.cid;clearTimeout(pending[id]);pending[id]=setTimeout(()=>commit(id),900)});
+document.addEventListener('change',e=>{const el=e.target.closest('[data-cid]');if(el)commit(el.dataset.cid)});
+document.addEventListener('keydown',e=>{const el=e.target.closest&&e.target.closest('[data-cid]');if(el&&e.key==='Enter'){el.blur()}});
+
+async function pull(){
+  if(!API) return;
+  try{
+    const j=await jsonp({action:'list'});
+    if(!j||!j.ok) throw 0;
+    const remote=j.counts||{}; let changed=false;
+    for(const k of new Set([...Object.keys(remote),...Object.keys(COUNTS)])){
+      if(!BYID[k]||pending[k]||inflight[k]) continue;
+      const r=remote[k], a=COUNTS[k];
+      const rv=r&&typeof r.count==='number'?r.count:null;
+      if(rv==null){ if(a!=null){delete COUNTS[k];delete META[k];changed=true} continue; }
+      const m=META[k]||{};
+      if(a!==rv||m.by!==(r.by||'')||m.at!==r.at){ COUNTS[k]=rv; META[k]={at:r.at,by:r.by||''}; changed=true; }
+    }
+    setSync(true,'متزامن · آخر تحديث '+new Date().toLocaleTimeString('ar-EG-u-nu-latn',{hour:'2-digit',minute:'2-digit'}));
+    if(changed) refreshCounts();
+  }catch(e){ setSync(false,'تعذّر الاتصال بجدول الجرد'); }
+}
+
+// ---------- overview
+function block(c,title,tag,arr,extraRows,go){
+  const cats={};arr.forEach(x=>cats[x.cat]=(cats[x.cat]||0)+x.qty);
+  const tot=sum(arr,'qty');
+  const bar=CATS.filter(k=>cats[k]).map(k=>`<i style="width:${cats[k]/tot*100}%;background:${CATC[k]}" title="${k} ${cats[k]}"></i>`).join('');
+  const leg=CATS.filter(k=>cats[k]).map(k=>`<span style="--c:${CATC[k]}">${k} ${cats[k]}</span>`).join('');
+  return `<div class="block" style="--c:${c}">
+    <h2>${title} <span class="tag ${tag}">${arr.length} موديل</span></h2>
+    <div class="kv"><div><span>عدد الأزواج</span><b>${f0(tot)}</b></div>${extraRows}</div>
+    <div class="mix"><div class="bar">${bar}</div><div class="legend">${leg}</div></div>
+    <button class="go" data-go="${go}">عرض الأصناف بالصور ←</button>
+  </div>`;
+}
+$('ovBlocks').innerHTML=
+ block('var(--p1)','مشطاح 1','t-p1',P1,`<div><span>عدد الكراتين</span><b>${D.cartons.length}</b></div>`,'shop:1')+
+ block('var(--p2)','مشطاح 2','t-p2',P2,`<div><span>عدد الأصناف</span><b>${P2.length}</b></div>`,'shop:2')+
+ block('var(--pt)','شراكة مهنا والحوراني','t-pt',part,`<div><span>نسبة المصاريف</span><b>${(D.partner.ratio*100).toFixed(1)}%</b></div>`,'pt');
+(function(){
+  const rows=CATS.map(k=>{const a=P1.filter(x=>x.cat==k),b=P2.filter(x=>x.cat==k),c=part.filter(x=>x.cat==k);
+    const t=sum(a,'qty')+sum(b,'qty')+sum(c,'qty'); if(!t)return'';
+    return `<tr><td><span class="legend"><span style="--c:${CATC[k]}">${k}</span></span></td><td class="n">${f0(sum(a,'qty'))}</td><td class="n">${f0(sum(b,'qty'))}</td><td class="n">${f0(sum(c,'qty'))}</td><td class="n"><b>${f0(t)}</b></td></tr>`}).join('');
+  $('catTable').innerHTML=`<thead><tr><th>الفئة</th><th>مشطاح 1</th><th>مشطاح 2</th><th>الشراكة</th><th>المجموع</th></tr></thead><tbody>${rows}</tbody>
+   <tfoot><tr><td><b>الإجمالي</b></td><td class="n"><b>${f0(sum(P1,'qty'))}</b></td><td class="n"><b>${f0(sum(P2,'qty'))}</b></td><td class="n"><b>${f0(sum(part,'qty'))}</b></td><td class="n"><b>${f0(sum(P1,'qty')+sum(P2,'qty')+sum(part,'qty'))}</b></td></tr></tfoot>`;
+})();
+function progOf(arr){
+  const done=arr.filter(x=>cnt(x)!=null);
+  const exp=sum(done,'qty'), got=done.reduce((t,x)=>t+cnt(x),0);
+  return {n:arr.length,done:done.length,ok:done.filter(x=>cnt(x)===x.qty).length,d:got-exp};
+}
+function renderProgress(){
+  const g=[['مشطاح 1','var(--p1)',P1],['مشطاح 2','var(--p2)',P2],['الشراكة','var(--pt)',part]];
+  $('invProgress').innerHTML=`<h2>الجرد <span class="tag t-p1">${ALL.filter(x=>cnt(x)!=null).length} من ${ALL.length} صنف</span></h2>
+  <div class="prog">${g.map(([t,c,a])=>{const p=progOf(a);
+    const dTxt=p.done?(p.d===0?'لا يوجد فرق بالأصناف المجرودة':(p.d<0?`ناقص ${-p.d} جوز بالأصناف المجرودة`:`زايد ${p.d} جوز بالأصناف المجرودة`)):'لسا ما بلّش الجرد';
+    return `<div class="pg" style="--c:${c}"><div class="top"><span>${t}</span><b>${p.done} / ${p.n}</b></div>
+      <div class="track"><i style="width:${p.done/p.n*100}%"></i></div><small>${p.ok} مطابق · ${dTxt}</small></div>`}).join('')}</div>
+  <div class="status"></div>`;
+}
+
+// ---------- invoice + cartons
+(function(){
+  const I=D.invoice;
+  const rows=I.items.map(r=>{
+    const art=(r.name.match(/A-\d+|\d+\/\d+/)||[''])[0];
+    const pals=[...(artPal[art]||[])].sort();
+    const ptag=pals.map(p=>`<span class="tag t-p${p}">م${p}</span>`).join(' ');
+    const m=shop.find(s=>s.art==art&&s.shk!=null);
+    return `<tr><td class="n">${r.no}</td><td>${esc(r.name)}</td><td class="n">${r.qty}</td><td class="n">${m?f2(m.shk):'—'}</td><td>${ptag}</td></tr>`}).join('');
+  $('invPanel').innerHTML=`
+   <h2>فاتورة مبيعات رقم ${esc(I.no)} <span class="tag t-p1">${esc(I.date)}</span></h2>
+   <p class="note">العميل: ${esc(I.name)} · كود ${esc(I.code)} · ${esc(I.company)}</p>
+   <div class="scroll"><table class="cat-table"><thead><tr><th>رقم</th><th>الصنف</th><th>أزواج</th><th>سعر الجوز ₪</th><th>المشطاح</th></tr></thead><tbody>${rows}</tbody></table></div>
+   <div class="costs"><div class="row"><span>عدد الأزواج</span><b>${f0(sum(I.items,'qty'))}</b></div><div class="row"><span>عدد الكراتين</span><b>${f0(sum(I.items,'cartons'))}</b></div></div>
+   <p class="note">صنف سكتشر رجالي 30/29: 13 جوز في مشطاح 1 و 2 جوز في مشطاح 2، المجموع 15 مطابق للفاتورة.</p>`;
+  $('cartons').innerHTML=D.cartons.map(c=>`<div><span>${esc(c[0])}</span><b>${c[1]}</b></div>`).join('');
+  const ct=D.cartons.reduce((t,c)=>t+c[1],0);
+  $('cartTag').textContent=`${D.cartons.length} كرتونة · ${ct} جوز`;
+  const pq=sum(P1,'qty');$('cartNote').textContent=ct==pq?'مجموع الكراتين مطابق لعدد أزواج المشطاح.':`مجموع الكراتين ${ct} جوز، بينما مجموع أصناف مشطاح 1 هو ${pq} جوز. الفرق ${ct-pq} يحتاج مراجعة.`;
+})();
+
+// ---------- partner info
+$('ptCosts').innerHTML=`
+   <h2>حسبة الشراكة <span class="tag t-pt">مصاريف ${(D.partner.ratio*100).toFixed(1)}%</span></h2>
+   <div class="costs">
+     <div class="row"><span>عدد الموديلات</span><b>${part.length}</b></div>
+     <div class="row"><span>عدد الأزواج</span><b>${f0(sum(part,'qty'))}</b></div>
+     <div class="row"><span>نسبة المصاريف على سعر الجوز</span><b>${(D.partner.ratio*100).toFixed(1)}%</b></div>
+   </div>
+   <p class="note">لكل صنف سعرين للجوز: قبل المصاريف، وبعد إضافة ${(D.partner.ratio*100).toFixed(1)}% مصاريف. الاثنين بالشيكل.</p>`;
+$('ptExtra').innerHTML=`
+   <h2>أصناف إضافية <span class="tag t-w">بدون عدد مسجل</span></h2>
+   <p class="note">مذكورة أسفل شيت الصور، من بضاعة أبو جهاد طرف البطش. سعر الجوز كما هو مسجل.</p>
+   <div class="costs">${extras.map(x=>`<div class="row"><span>${esc(x.desc)}</span><b>${f2(x.shk)} ₪</b></div>`).join('')}</div>`;
+
+// ---------- lists
+let LB=[],LBi=0;
+function photo(it,i,tagHtml){
+  const src=it.img[0];
+  return `<button class="ph" data-lb="${i}" aria-label="تكبير صورة ${esc(it.desc)}">
+    ${src?`<img src="${src}" alt="${esc(it.desc)}" loading="lazy">`:'<span class="noimg">بدون صورة</span>'}
+    ${tagHtml}<span class="no">#${it.n}</span>${it.img.length>1?`<span class="cnt">${it.img.length} صور</span>`:''}</button>`;
+}
+const countRow=it=>`<div class="count"><label for="c-${it.id}">بعد الجرد</label>${inputHTML(it)}${difHTML(it)}${byHTML(it)}</div>`;
+function chipsFor(el,arr,state,rerender){
+  const cs=CATS.filter(k=>arr.some(x=>x.cat==k));
+  el.innerHTML=['الكل',...cs].map(k=>`<button data-c="${k}" aria-pressed="${state.cat==k}">${k}</button>`).join('');
+  el.onclick=e=>{const b=e.target.closest('button');if(!b)return;state.cat=b.dataset.c;[...el.children].forEach(x=>x.setAttribute('aria-pressed',x==b));rerender()};
+}
+const match=(it,q)=>!q||[it.desc,it.art,it.size,String(it.n)].join(' ').toLowerCase().includes(q.toLowerCase());
+const SS={pal:'all',cat:'الكل',q:'',mode:'grid',st:'all'};
+const PS={cat:'الكل',q:'',mode:'grid',st:'all'};
+const shopArr=()=>shop.filter(s=>(SS.pal=='all'||s.pal==SS.pal)&&(SS.cat=='الكل'||s.cat==SS.cat)&&(SS.st=='all'||status(s)==SS.st)&&match(s,SS.q));
+const ptArr=()=>part.filter(s=>(PS.cat=='الكل'||s.cat==PS.cat)&&(PS.st=='all'||status(s)==PS.st)&&match(s,PS.q));
+function resLine(arr){const done=arr.filter(x=>cnt(x)!=null);return `<b>${arr.length}</b> صنف · <b>${f0(sum(arr,'qty'))}</b> جوز مسجل · تم جرد <b>${done.length}</b> صنف`}
+function resultLines(){if(!$('v-shop').hidden)$('shopRes').innerHTML=resLine(shopArr());if(!$('v-pt').hidden)$('ptRes').innerHTML=resLine(ptArr())}
+function renderShop(){
+  const arr=shopArr(); LB=arr; resultLines();
+  const out=$('shopOut');
+  if(SS.mode=='grid'){
+    out.innerHTML=`<div class="grid">${arr.map((s,i)=>{
+      const split=artPal[s.art]&&artPal[s.art].size>1;
+      return `<article class="card${cnt(s)!=null?' done':''}" data-card="${s.id}" style="--c:var(--p${s.pal})">${photo(s,i,`<span class="tag t-p${s.pal}">مشطاح ${s.pal}</span>`)}
+      <div class="bd"><div class="ttl"><b>${esc(s.desc)}</b><span class="art">${esc(s.art)}</span></div>
+      <div class="meta"><span>مقاس ${esc(s.size)||'—'}</span><span>${s.qty} جوز</span><span>${s.cat}</span></div>
+      <div class="prices"><div><span>سعر الجوز</span><b>${s.shk!=null?f2(s.shk)+' ₪':'غير مسجل'}</b></div></div>
+      ${countRow(s)}
+      ${split?`<div class="split">هذا الارتكل موزع على المشطاحين</div>`:''}</div></article>`}).join('')}</div>`;
+  }else{
+    out.innerHTML=`<div class="scroll"><table class="tbl"><thead><tr><th>صورة</th><th>#</th><th>المشطاح</th><th>البيان</th><th>ارتكل</th><th>المقاس</th><th>العدد المسجل</th><th>سعر الجوز ₪</th><th>بعد الجرد</th><th>الفرق</th></tr></thead>
+    <tbody>${arr.map((s,i)=>`<tr><td>${s.img[0]?`<img src="${s.img[0]}" data-lb="${i}" alt="" loading="lazy">`:''}</td><td class="n">${s.n}</td><td><span class="tag t-p${s.pal}">مشطاح ${s.pal}</span></td><td>${esc(s.desc)}</td><td class="n" dir="ltr">${esc(s.art)}</td><td class="n">${esc(s.size)}</td><td class="n">${s.qty}</td><td class="n">${s.shk!=null?f2(s.shk):'غير مسجل'}</td><td style="--c:var(--p${s.pal})">${inputHTML(s)}</td><td>${difHTML(s)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+}
+function renderPt(){
+  const arr=ptArr(); LB=arr; resultLines();
+  const out=$('ptOut');
+  if(PS.mode=='grid'){
+    out.innerHTML=`<div class="grid">${arr.map((s,i)=>`<article class="card${cnt(s)!=null?' done':''}" data-card="${s.id}" style="--c:var(--pt)">${photo(s,i,`<span class="tag t-pt">شراكة</span>`)}
+      <div class="bd"><div class="ttl"><b>${esc(s.desc)}</b><span class="art">${esc(s.art)}</span></div>
+      <div class="meta"><span>${s.qty} جوز</span><span>${s.cat}</span></div>
+      <div class="prices"><div><span>قبل المصاريف</span><b>${f2(s.pre)} ₪</b></div><div class="tot"><span>شامل المصاريف</span><b>${f2(s.shk)} ₪</b></div></div>
+      ${countRow(s)}
+      ${s.flag?`<div class="split">${esc(s.flag)}</div>`:''}</div></article>`).join('')}</div>`;
+  }else{
+    out.innerHTML=`<div class="scroll"><table class="tbl"><thead><tr><th>صورة</th><th>#</th><th>البيان</th><th>ارتكل</th><th>العدد المسجل</th><th>الجوز قبل المصاريف ₪</th><th>الجوز شامل المصاريف ₪</th><th>بعد الجرد</th><th>الفرق</th></tr></thead>
+    <tbody>${arr.map((s,i)=>`<tr><td>${s.img[0]?`<img src="${s.img[0]}" data-lb="${i}" alt="" loading="lazy">`:''}</td><td class="n">${s.n}</td><td>${esc(s.desc)}</td><td class="n" dir="ltr">${esc(s.art)}</td><td class="n">${s.qty}</td><td class="n">${f2(s.pre)}</td><td class="n">${f2(s.shk)}</td><td style="--c:var(--pt)">${inputHTML(s)}</td><td>${difHTML(s)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+}
+chipsFor($('shopChips'),shop,SS,renderShop);
+chipsFor($('ptChips'),part,PS,renderPt);
+function seg(id,key,state,fn,attr){$(id).onclick=e=>{const b=e.target.closest('button');if(!b)return;state[key]=b.dataset[attr];[...b.parentNode.children].forEach(x=>x.setAttribute('aria-pressed',x==b));fn()}}
+seg('shopSeg','pal',SS,renderShop,'p');seg('shopMode','mode',SS,renderShop,'m');seg('ptMode','mode',PS,renderPt,'m');
+seg('shopSt','st',SS,renderShop,'s');seg('ptSt','st',PS,renderPt,'s');
+$('shopQ').oninput=e=>{SS.q=e.target.value.trim();renderShop()};
+$('ptQ').oninput=e=>{PS.q=e.target.value.trim();renderPt()};
+
+// tabs
+function show(v){['ov','shop','pt'].forEach(k=>{$('v-'+k).hidden=k!=v;$('tab-'+k).setAttribute('aria-selected',k==v)});
+  if(v=='shop')renderShop(); if(v=='pt')renderPt(); try{localStorage.setItem('hv-tab',v)}catch(e){} }
+document.querySelector('nav.tabs').onclick=e=>{const b=e.target.closest('button');if(b){show(b.dataset.v);scrollTo({top:0})}};
+$('ovBlocks').onclick=e=>{const b=e.target.closest('[data-go]');if(!b)return;const[g,p]=b.dataset.go.split(':');
+  if(g=='shop'){SS.pal=p;document.querySelectorAll('#shopSeg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.p==p))}show(g);scrollTo({top:0})};
+
+// lightbox
+const lb=$('lb');
+function openLB(i){LBi=i;const it=LB[i];if(!it||!it.img[0])return;$('lbImg').src=it.img[0];
+  $('lbT').textContent=it.desc+' · '+it.art;
+  $('lbS').textContent=(it.pal?'مشطاح '+it.pal+' · ':'شراكة · ')+it.qty+' جوز'+(it.size?' · مقاس '+it.size:'');
+  if(!lb.open)lb.showModal()}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-lb]');if(t)openLB(+t.dataset.lb)});
+const step=d=>{let i=LBi;for(let k=0;k<LB.length;k++){i=(i+d+LB.length)%LB.length;if(LB[i].img[0])break}openLB(i)};
+$('lbPrev').onclick=()=>step(-1);$('lbNext').onclick=()=>step(1);
+$('lbX').onclick=()=>lb.close();
+lb.addEventListener('click',e=>{if(e.target==lb)lb.close()});
+document.addEventListener('keydown',e=>{if(!lb.open)return;if(e.key=='ArrowLeft')step(1);if(e.key=='ArrowRight')step(-1)});
+
+let start='ov';try{start=localStorage.getItem('hv-tab')||'ov'}catch(e){}
+if(location.hash==='#shop'||location.hash==='#pt')start=location.hash.slice(1);
+// ---------- name (kept on this device)
+try{$('who').value=localStorage.getItem('hv-who')||''}catch(e){}
+$('who').addEventListener('change',()=>{try{localStorage.setItem('hv-who',getName())}catch(e){}});
+
+// ---------- Excel export (from the current data in the page)
+$('xlsxBtn').onclick=()=>{
+  if(!window.XLSX){toast('مكتبة Excel ما انحمّلت — حدّث الصفحة');return}
+  const head=['القسم','#','البيان','الارتكل','المقاس','الفئة','العدد المسجل','سعر الجوز ₪','سعر الجوز قبل المصاريف ₪','العدد بعد الجرد','الفرق','الحالة','آخر تعديل','بواسطة'];
+  const rows=[head];
+  ALL.forEach(it=>{const c=cnt(it),m=META[it.id]||{},d=c==null?'':c-it.qty;
+    rows.push([palName(it),it.n,it.desc,it.art||'',it.size||'',it.cat,it.qty,it.shk==null?'':+(+it.shk).toFixed(2),it.pre==null?'':+it.pre.toFixed(2),c==null?'':c,d,
+      c==null?'لم يُجرد':d===0?'مطابق':d<0?'ناقص '+(-d):'زايد '+d, c!=null&&m.at?fmtAt(m.at):'', c!=null?(m.by||''):'']);
+  });
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[{wch:11},{wch:5},{wch:26},{wch:10},{wch:9},{wch:9},{wch:12},{wch:12},{wch:14},{wch:14},{wch:8},{wch:10},{wch:18},{wch:14}];
+  const wb=XLSX.utils.book_new(); wb.Workbook={Views:[{RTL:true}]};
+  XLSX.utils.book_append_sheet(wb,ws,'الجرد');
+  XLSX.writeFile(wb,'جرد أحذية الحوراني - '+new Date().toISOString().slice(0,10)+'.xlsx');
+  toast('بدأ تنزيل ملف Excel');
+};
+
+// ---------- ZIP of photos (folder per section)
+const safe=s=>String(s??'').replace(/[\\/:*?"<>|]+/g,'-').replace(/\s+/g,' ').trim();
+$('zipBtn').onclick=async()=>{
+  if(!window.JSZip){toast('مكتبة الضغط ما انحمّلت — حدّث الصفحة');return}
+  const btn=$('zipBtn'); btn.disabled=true;
+  try{
+    const zip=new JSZip(); const all=ALL.flatMap(it=>it.img.map((f,i)=>({it,f,i}))); let done=0;
+    for(const {it,f,i} of all){
+      const r=await fetch(f); if(!r.ok) throw new Error('fetch');
+      const name=`${String(it.n).padStart(2,'0')} - ${safe(it.desc)}${it.art?' - '+safe(it.art):''}${it.img.length>1?' ('+(i+1)+')':''}.webp`;
+      zip.folder(palName(it)).file(name,await r.blob());
+      $('zipTxt').textContent=`جارٍ التجهيز ${++done}/${all.length}`;
+    }
+    const blob=await zip.generateAsync({type:'blob',compression:'STORE'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='صور بضاعة الحوراني.zip';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),60000);
+    toast('بدأ تنزيل ملف الصور');
+  }catch(e){toast('ما قدرت أجهّز ملف الصور — تأكد من الإنترنت')}
+  finally{btn.disabled=false;$('zipTxt').textContent='تنزيل الصور (ZIP)'}
+};
+
+// ---------- start (only after unlock)
+let started=false;
+function startApp(){ if(started) return; started=true;
+  renderProgress(); show(start);
+  if(!API){ CAN_WRITE=false; setSync(false,'جدول الجرد غير مربوط'); $('banner').textContent='لم يُربط جدول Google Sheets بعد — أرقام الجرد لن تُحفظ حتى يتم الربط.'; $('banner').hidden=false; refreshCounts(); return; }
+  pull(); setInterval(()=>{if(!document.hidden)pull()},12000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});
+}
+
+// ---------- access code gate
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function tryCode(c){return !!c && (await sha(REPO+':'+c))===GATE_HASH}
+function unlock(c){PIN=c;try{localStorage.setItem('hv-pin',c)}catch(e){}document.body.classList.remove('locked');startApp()}
+$('gateForm').addEventListener('submit',async e=>{e.preventDefault();const c=$('gateCode').value.trim();
+  if(await tryCode(c)) unlock(c); else {$('gateErr').textContent='الرمز غلط، جرّب مرة ثانية.';$('gateCode').select()}});
+$('btnOut').onclick=()=>{try{localStorage.removeItem('hv-pin')}catch(e){}location.reload()};
+(async()=>{let c='';try{c=localStorage.getItem('hv-pin')||''}catch(e){}if(await tryCode(c)) unlock(c); else $('gateCode').focus()})();
+</script>
+
+</body></html>

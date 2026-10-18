@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>دليل لوحة بضاعة الحوراني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one reading column of numbered sections, same tokens as the dashboard */
+:root{
+  --bg:#f3f4f2; --surface:#ffffff; --sunk:#e9ebe7; --line:#d9ddd6; --fg:#1d2420; --muted:#5f6a63;
+  --p1:#1f6f68; --p1-soft:#dcefec; --p2:#b4621b; --p2-soft:#f6e6d6; --pt:#6a3d8f; --pt-soft:#ece2f4;
+  --warn:#a8321f; --warn-soft:#f8e1dc;
+  --display:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131715; --surface:#1b201d; --sunk:#232925; --line:#313833; --fg:#e7ebe8; --muted:#9aa59e;
+  --p1:#5cc2b8; --p1-soft:#173532; --p2:#e7a061; --p2-soft:#3a2816; --pt:#bb93df; --pt-soft:#2e2338;
+  --warn:#f08a74; --warn-soft:#3b1d17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131715; --surface:#1b201d; --sunk:#232925; --line:#313833; --fg:#e7ebe8; --muted:#9aa59e;
+  --p1:#5cc2b8; --p1-soft:#173532; --p2:#e7a061; --p2-soft:#3a2816; --pt:#bb93df; --pt-soft:#2e2338;
+  --warn:#f08a74; --warn-soft:#3b1d17; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75}
+.wrap{max-width:760px;margin:0 auto;padding-block:28px 64px;padding-inline:16px;display:flex;flex-direction:column;gap:18px}
+header{display:flex;flex-direction:column;gap:10px}
+.back{align-self:flex-start;text-decoration:none;color:var(--p1);font-weight:600;font-size:14px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px}
+h1{font-family:var(--display);font-size:clamp(24px,5vw,34px);margin:0;line-height:1.3;text-wrap:balance}
+.lead{margin:0;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:6px}
+.toc a{font-size:13px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+section{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--p1);border-radius:12px;padding:18px 18px 20px;scroll-margin-top:16px;break-inside:avoid}
+section h2{font-family:var(--display);font-size:19px;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+section h2 .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--p1);color:var(--surface);display:grid;place-items:center;font-size:15px}
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:flex;flex-direction:column;gap:8px}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+ol.steps>li::before{content:counter(s);font-weight:700;color:var(--p1);background:var(--p1-soft);border-radius:8px;height:28px;display:grid;place-items:center;font-size:14px;margin-top:2px}
+ol.steps>li>div{min-width:0}
+ul{margin:6px 0 0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+.ui{display:inline-block;font-weight:600;font-size:14px;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:0 7px;line-height:1.7;white-space:nowrap}
+.pill{display:inline-block;font-size:13px;font-weight:600;padding:0 9px;border-radius:999px;line-height:1.8;white-space:nowrap}
+.ok{background:var(--p1-soft);color:var(--p1)} .short{background:var(--warn-soft);color:var(--warn)} .over{background:var(--p2-soft);color:var(--p2)}
+.t1{background:var(--p1-soft);color:var(--p1)} .t2{background:var(--p2-soft);color:var(--p2)} .tp{background:var(--pt-soft);color:var(--pt)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin-inline-end:4px}
+.dot.g{background:#2f9e5b} .dot.r{background:var(--warn)}
+.link{direction:ltr;unicode-bidi:isolate;display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:14px;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:2px 8px;word-break:break-all;color:var(--p1);text-decoration:none}
+section.note{border-top-color:var(--warn);background:var(--warn-soft)}
+section.note h2 .n{background:var(--warn)}
+footer{text-align:center}
+@media print{.back,.toc{display:none}body{background:#fff}section{border-color:#ccc}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="./">← العودة للوحة</a>
+    <h1>دليل استخدام لوحة بضاعة أحذية الحوراني</h1>
+    <p class="lead">شرح كل شي في اللوحة خطوة بخطوة: من الدخول لحد تصدير نتيجة الجرد.</p>
+    <nav class="toc" aria-label="أقسام الدليل">
+      <a href="#s1">الدخول</a><a href="#s2">قبل البدء</a><a href="#s3">النظرة العامة</a><a href="#s4">التنبيهات</a><a href="#s5">التبويبات والبحث</a><a href="#s6">طريقة العرض</a><a href="#s7">بطاقة الصنف</a><a href="#s8">طريقة الجرد</a><a href="#s9">الأزرار</a><a href="#s10">ملاحظات</a>
+    </nav>
+  </header>
+
+  <section id="s1">
+    <h2><span class="n">1</span>الدخول</h2>
+    <ol class="steps">
+      <li><div>افتح الرابط: <a class="link" href="./">ahmdwork23-source.github.io/horanistore</a></div></li>
+      <li><div>بتظهر شاشة <span class="ui">رمز الدخول</span>. اكتب الرمز اللي وصلك برسالة منفصلة، واضغط <span class="ui">دخول</span>.</div></li>
+      <li><div>الجهاز بيتذكر الرمز، وما بيطلبه مرة ثانية على نفس الجهاز إلا إذا ضغطت <span class="ui">خروج</span>.</div></li>
+    </ol>
+  </section>
+
+  <section id="s2">
+    <h2><span class="n">2</span>قبل ما تبلّش الجرد</h2>
+    <ol class="steps">
+      <li><div>تحت العنوان في خانة <span class="ui">اسمك</span>. اكتب اسمك مرة وحدة، وهو بينحفظ جنب كل عدد بتدخله، عشان نعرف مين جرد ومتى.</div></li>
+      <li><div>جنب الخانة في نقطة بتبيّن حالة الاتصال:
+        <ul>
+          <li><span class="dot g"></span><b>خضراء «متزامن»</b>: الاتصال تمام، والأعداد بتنحفظ.</li>
+          <li><span class="dot r"></span><b>حمراء «تعذّر الاتصال بجدول الجرد»</b>: ما في اتصال. تأكد من الإنترنت وحدّث الصفحة.</li>
+        </ul></div></li>
+    </ol>
+  </section>
+
+  <section id="s3">
+    <h2><span class="n">3</span>النظرة العامة (الملخص)</h2>
+    <ol class="steps">
+      <li><div><b>الجرد</b>: كم صنف انجرد من أصل 123، ولكل قسم شريط تقدّم، وكم صنف مطابق، ومجموع النقص أو الزيادة بالأصناف المجرودة.</div></li>
+      <li><div><b>ثلاث بطاقات</b>: <span class="pill t1">مشطاح 1</span> (31 موديل · 506 جوز · 19 كرتونة)، <span class="pill t2">مشطاح 2</span> (39 موديل · 466 جوز)، <span class="pill tp">شراكة مهنا والحوراني</span> (53 موديل · 919 جوز). كل بطاقة فيها توزيع الأزواج حسب الفئة، وزر <span class="ui">عرض الأصناف بالصور</span>.</div></li>
+      <li><div><b>جدول توزيع الأزواج حسب الفئة</b>: رجالي، شبابي، حريمي، أطفال، شباشب… لكل قسم والمجموع.</div></li>
+    </ol>
+  </section>
+
+  <section id="s4">
+    <h2><span class="n">4</span>التنبيهات والمعلومات</h2>
+    <ol class="steps">
+      <li><div>في تبويب <span class="ui">بضاعة المحل</span>: <b>فاتورة المبيعات رقم 12</b> مع مكان كل صنف (م1 / م2)، و<b>كراتين مشطاح 1</b> مع عدد الأزواج بكل كرتونة. إذا مجموع الكراتين ما طابق مجموع الأصناف، بيظهر تنبيه بالفرق.</div></li>
+      <li><div>على البطاقة: <span class="pill short">هذا الارتكل موزع على المشطاحين</span> لما يكون نفس الصنف بالمشطاحين.</div></li>
+      <li><div>في تبويب <span class="ui">بضاعة الشراكة</span>: <b>حسبة الشراكة</b> ونسبة المصاريف، و<b>أصناف إضافية</b> بدون عدد مسجل، وملاحظات على بعض الأصناف (مثل اختلاف العدد بين الشيت والحسبة).</div></li>
+    </ol>
+  </section>
+
+  <section id="s5">
+    <h2><span class="n">5</span>التبويبات والبحث</h2>
+    <ol class="steps">
+      <li><div><b>التبويبات</b>: <span class="ui">نظرة عامة</span> / <span class="ui">بضاعة المحل</span> / <span class="ui">بضاعة الشراكة</span>.</div></li>
+      <li><div><b>المشطاح</b> (بضاعة المحل): <span class="ui">الكل</span> / <span class="ui">مشطاح 1</span> / <span class="ui">مشطاح 2</span>.</div></li>
+      <li><div><b>حالة الجرد</b>: <span class="ui">لم يُجرد</span> / <span class="ui">مطابق</span> / <span class="ui">فيه فرق</span>.</div></li>
+      <li><div><b>البحث</b>: بالاسم أو الارتكل أو المقاس أو رقم الصنف.</div></li>
+      <li><div><b>الفئات</b>: أزرار صغيرة تحت البحث (رجالي، شبابي، حريمي…) لعرض فئة وحدة.</div></li>
+    </ol>
+  </section>
+
+  <section id="s6">
+    <h2><span class="n">6</span>طريقة العرض</h2>
+    <ol class="steps">
+      <li><div><span class="ui">صور</span>: بطاقة لكل صنف مع صورة كبيرة. أنسب للموبايل.</div></li>
+      <li><div><span class="ui">جدول</span>: كل الأصناف بسطور، أسرع للجرد على الكمبيوتر.</div></li>
+    </ol>
+  </section>
+
+  <section id="s7">
+    <h2><span class="n">7</span>محتوى بطاقة الصنف</h2>
+    <ol class="steps">
+      <li><div><b>الصورة</b>: اضغط عليها لتكبيرها، وتنقّل بين الأصناف بزري <span class="ui">السابق</span> و<span class="ui">التالي</span>.</div></li>
+      <li><div><b>رقم الصنف</b> (#) و<b>القسم</b> (مشطاح 1 / مشطاح 2 / شراكة).</div></li>
+      <li><div><b>البيان</b> و<b>الارتكل</b> و<b>المقاس</b> و<b>العدد المسجل</b> (جوز) و<b>الفئة</b>.</div></li>
+      <li><div><b>السعر بالشيكل</b>: لبضاعة المحل «سعر الجوز»، وللشراكة سعرين: «قبل المصاريف» و«شامل المصاريف».</div></li>
+      <li><div><b>بعد الجرد</b>: الخانة اللي بتكتب فيها العدد الفعلي، وجنبها النتيجة:
+        <ul>
+          <li><span class="pill ok">مطابق</span> العدد نفس المسجل.</li>
+          <li><span class="pill short">ناقص 2</span> أو <span class="pill over">زايد 1</span> مع الفرق.</li>
+          <li>تحتها اسم اللي سجّل العدد ووقته.</li>
+        </ul></div></li>
+    </ol>
+  </section>
+
+  <section id="s8">
+    <h2><span class="n">8</span>طريقة الجرد</h2>
+    <ol class="steps">
+      <li><div>عدّ الأزواج فعلياً، واكتب الرقم بخانة <span class="ui">بعد الجرد</span>.</div></li>
+      <li><div>ما في زر حفظ: الحفظ تلقائي بعد ثانية تقريباً، أو لما تطلع من الخانة.</div></li>
+      <li><div>لحذف عدد: امسح الخانة واتركها فاضية.</div></li>
+      <li><div>أكثر من شخص بيقدروا يجردوا بنفس الوقت من أجهزة مختلفة، وأعداد الكل بتظهر عند الجميع خلال ثواني.</div></li>
+    </ol>
+  </section>
+
+  <section id="s9">
+    <h2><span class="n">9</span>الأزرار فوق</h2>
+    <ol class="steps">
+      <li><div><span class="ui">تصدير Excel</span>: ملف فيه كل الأصناف مع العدد المسجل والعدد بعد الجرد والفرق، ومين سجّل ومتى.</div></li>
+      <li><div><span class="ui">تنزيل الصور (ZIP)</span>: ملف مضغوط فيه كل الصور، مجلد لكل قسم، وكل صورة باسم الصنف ورقمه والارتكل.</div></li>
+      <li><div><span class="ui">دليل الاستخدام</span>: بيفتح هالصفحة.</div></li>
+      <li><div><span class="ui">خروج</span>: بيقفل اللوحة على هذا الجهاز وبيطلب الرمز من جديد.</div></li>
+    </ol>
+  </section>
+
+  <section id="s10" class="note">
+    <h2><span class="n">!</span>ملاحظات</h2>
+    <ul>
+      <li>اللوحة بتشتغل على الموبايل والكمبيوتر، وبتتبع الوضع الداكن للجهاز.</li>
+      <li>كل الأسعار <b>سعر الجوز الواحد</b> بالشيكل.</li>
+      <li>إذا صار خطأ بالحفظ، بتظهر رسالة تحت الشاشة والرقم بيرجع لقيمته السابقة. تأكد من الإنترنت واكتب العدد مرة ثانية.</li>
+      <li>لا تشارك رمز الدخول إلا مع الناس اللي بيجردوا.</li>
+    </ul>
+  </section>
+
+  <footer><a class="back" href="./">← العودة للوحة</a></footer>
+</div>
+</body>
+</html>
